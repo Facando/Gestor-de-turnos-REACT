@@ -1,0 +1,195 @@
+<link rel="stylesheet" href="/styles-form.css">
+<!-- Sweet Alert CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header text-white">
+                <h3 class="mb-0"><i class="fas fa-plus me-2"></i>{{title}}</h3>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="/turnos/reservar" id="form-reservar">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="nombres" class="form-label">Nombre Completo</label>
+                            <input type="text" class="form-control" id="nombres" name="nombres" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="fecha" class="form-label">Fecha</label>
+                            <input type="date" class="form-control" id="fecha" name="fecha" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="hora" class="form-label">Hora</label>
+                            <select class="form-select" id="hora" name="hora" required>
+                                <option value="">Seleccionar hora...</option>
+                                <option value="09:00">09:00 AM</option>
+                                <option value="09:30">09:30 AM</option>
+                                <option value="10:00">10:00 AM</option>
+                                <option value="10:30">10:30 AM</option>
+                                <option value="11:00">11:00 AM</option>
+                                <option value="11:30">11:30 AM</option>
+                                <option value="14:00">02:00 PM</option>
+                                <option value="14:30">02:30 PM</option>
+                                <option value="15:00">03:00 PM</option>
+                                <option value="15:30">03:30 PM</option>
+                                <option value="16:00">04:00 PM</option>
+                                <option value="16:30">04:30 PM</option>
+                                <option value="17:00">05:00 PM</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="motivo" class="form-label">Motivo de la Consulta</label>
+                        <select class="form-select" id="motivo" name="motivo" required>
+                            <option value="">Seleccionar motivo...</option>
+                            <option value="Consulta General">Consulta General</option>
+                            <option value="Revisión">Revisión</option>
+                            <option value="Tratamiento">Tratamiento</option>
+                            <option value="Emergencia">Emergencia</option>
+                            <option value="Seguimiento">Seguimiento</option>
+                        </select>
+                    </div>
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="/turnos" class="btn btn-secondary me-md-2">
+                            <i class="fas fa-arrow-left me-2"></i>Volver
+                        </a>
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-save me-2"></i>Reservar Turno
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Establece una fecha mínima como hoy
+    document.getElementById('fecha').min = new Date().toISOString().split('T')[0];
+
+    {{#if sweetAlert}}
+    // Sweet Alert desde el servidor
+    document.addEventListener('DOMContentLoaded', function() {
+        Swal.fire({
+            icon: '{{sweetAlert.type}}',
+            title: '{{sweetAlert.title}}',
+            text: '{{sweetAlert.text}}',
+            confirmButtonColor: '#28a745'
+        }).then((result) => {
+            {{#if sweetAlert.redirect}}
+            if (result.isConfirmed) {
+                window.location.href = '{{sweetAlert.redirect}}';
+            }
+            {{/if}}
+        });
+    });
+    {{/if}}
+
+    // Sweet Alert para el formulario
+    document.getElementById('form-reservar').addEventListener('submit', function(e) {
+        e.preventDefault(); // Prevenir envío automático
+        
+        // Obtener valores del formulario
+        const nombres = document.getElementById('nombres').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const fecha = document.getElementById('fecha').value;
+        const hora = document.getElementById('hora').value;
+        const motivo = document.getElementById('motivo').value;
+        
+        // Validaciones con Sweet Alert
+        if (!nombres) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Campo requerido',
+                text: 'Por favor ingresa tu nombre completo',
+                confirmButtonColor: '#28a745'
+            });
+            return;
+        }
+        
+        if (!email) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Campo requerido',
+                text: 'Por favor ingresa tu email',
+                confirmButtonColor: '#28a745'
+            });
+            return;
+        }
+        
+        if (!fecha) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Campo requerido',
+                text: 'Por favor selecciona una fecha',
+                confirmButtonColor: '#28a745'
+            });
+            return;
+        }
+        
+        if (!hora) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Campo requerido',
+                text: 'Por favor selecciona una hora',
+                confirmButtonColor: '#28a745'
+            });
+            return;
+        }
+        
+        if (!motivo) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Campo requerido',
+                text: 'Por favor selecciona el motivo de la consulta',
+                confirmButtonColor: '#28a745'
+            });
+            return;
+        }
+        
+        // Confirmación antes de enviar
+        Swal.fire({
+            title: '¿Confirmar reserva?',
+            html: `
+                <strong>Nombre:</strong> ${nombres}<br>
+                <strong>Email:</strong> ${email}<br>
+                <strong>Fecha:</strong> ${fecha}<br>
+                <strong>Hora:</strong> ${hora}<br>
+                <strong>Motivo:</strong> ${motivo}
+            `,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#28a745',
+            cancelButtonColor: '#dc3545',
+            confirmButtonText: 'Sí, reservar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Mostrar loading
+                Swal.fire({
+                    title: 'Procesando...',
+                    text: 'Creando tu reserva',
+                    icon: 'info',
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                    willOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+                
+                // Enviar formulario
+                this.submit();
+            }
+        });
+    });
+</script> 

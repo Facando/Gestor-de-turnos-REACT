@@ -1,0 +1,15 @@
+.card-body {
+  padding: 1.5rem;
+  font-size: 1.2rem;
+  border: 2px solid #28a745 !important;
+}
+
+.card-body .form-control {
+  border: 2px solid #28a745 !important;
+}
+
+.card-body .form-control:focus {
+  border-color: #28a745 !important;
+  box-shadow: 0 0 0 0.25rem rgba(40, 167, 69, 0.15) !important;
+}
+

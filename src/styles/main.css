@@ -1,0 +1,110 @@
+/* Estilos generales */
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+/* Estilos del contenedor principal */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* Estilos para las tarjetas */
+.card {
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+}
+
+/* Estilos para los formularios */
+.form-control:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.2rem rgba(13,110,253,0.25);
+}
+
+/* Estilos para los botones */
+.btn {
+  transition: all 0.2s;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+/* Estilos para el footer */
+footer {
+  background-color: #f8f9fa;
+  padding: 1rem 0;
+  margin-top: auto;
+}
+
+/* Estilos para la navegación */
+.navbar {
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Estilos para las alertas */
+.alert {
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+/* Estilos para las tablas */
+.table {
+  background-color: white;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+/* Estilos para los badges */
+.badge {
+  padding: 0.5em 0.75em;
+}
+
+/* Estilos para los iconos */
+.fas {
+  margin-right: 0.5rem;
+}
+
+/* Estilos para el contador de turnos */
+.turnos-counter {
+  background-color: #0d6efd;
+  color: white;
+  padding: 1rem;
+  border-radius: 4px;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+/* Estilos para el calendario */
+.calendar {
+  background-color: white;
+  border-radius: 4px;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Estilos para los mensajes de carga */
+.loading {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  border: 3px solid rgba(255,255,255,0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+} 

@@ -1,0 +1,71 @@
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-warning text-dark">
+                    <h3 class="mb-0"><i class="fas fa-edit"></i> Editar Turno</h3>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info mb-4">
+                        <i class="fas fa-info-circle me-2"></i>
+                        <strong>Nota:</strong> Al actualizar tu turno, recibirás un email de confirmación con los nuevos detalles.
+                    </div>
+                    
+                    <form action="/turnos/editar/{{turno.id}}" method="POST">
+                        
+                        <div class="mb-3">
+                            <label for="nombres" class="form-label">Nombre Completo</label>
+                            <input type="text" class="form-control" id="nombres" name="nombres" value="{{turno.nombres}}" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" value="{{turno.email}}" required>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="fecha" class="form-label">Fecha</label>
+                                    <input type="date" class="form-control" id="fecha" name="fecha" value="{{turno.fecha}}" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="hora" class="form-label">Hora</label>
+                                    <input type="time" class="form-control" id="hora" name="hora" value="{{turno.hora}}" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="motivo" class="form-label">Motivo de la Consulta</label>
+                            <select class="form-select" id="motivo" name="motivo" required>
+                                <option value="">Selecciona un motivo</option>
+                                <option value="Consulta General" {{#if (eq turno.motivo 'Consulta General')}}selected{{/if}}>Consulta General</option>
+                                <option value="Revisión" {{#if (eq turno.motivo 'Revisión')}}selected{{/if}}>Revisión</option>
+                                <option value="Tratamiento" {{#if (eq turno.motivo 'Tratamiento')}}selected{{/if}}>Tratamiento</option>
+                                <option value="Emergencia" {{#if (eq turno.motivo 'Emergencia')}}selected{{/if}}>Emergencia</option>
+                                <option value="Seguimiento" {{#if (eq turno.motivo 'Seguimiento')}}selected{{/if}}>Seguimiento</option>
+                            </select>
+                        </div>
+                        
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="/turnos" class="btn btn-secondary me-md-2">
+                                <i class="fas fa-arrow-left"></i> Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-warning">
+                                <i class="fas fa-save"></i> Actualizar Turno
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Establecer fecha mínima (hoy)
+document.getElementById('fecha').min = new Date().toISOString().split('T')[0];
+</script> 
